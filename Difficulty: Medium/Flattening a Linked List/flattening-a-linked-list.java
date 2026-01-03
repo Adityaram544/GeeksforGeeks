@@ -1,28 +1,24 @@
-/*Node class  used in the program
-class Node
-{
+/*
+class Node {
     int data;
     Node next;
     Node bottom;
 
-    Node(int d)
-    {
-        data = d;
+    Node(int x) {
+        data = x;
         next = null;
         bottom = null;
     }
 }
 */
-/*  Function which returns the  root of
-    the flattened linked list. */
-class GfG {
-    Node flatten(Node root) {
-        // Your code here
+class Solution {
+    public Node flatten(Node root) {
+        // code here
         if(root==null || root.next==null) return root;
         Node mergeHead=flatten(root.next);
         return merge(root,mergeHead);
     }
-    private static Node merge(Node l1,Node l2){
+    private Node merge(Node l1,Node l2){
         Node dummy=new Node(-1);
         Node temp=dummy;
         while(l1!=null && l2!=null){
@@ -37,13 +33,8 @@ class GfG {
             }
             temp.next=null;
         }
-        if(l1!=null){
-            temp.bottom=l1;
-        }
-        if(l2!=null){
-            temp.bottom=l2;
-        }
-        if(dummy.bottom!=null) dummy.bottom.next=null;
+        if(l1!=null) temp.bottom=l1;
+        if(l2!=null) temp.bottom=l2;
         return dummy.bottom;
     }
 }
