@@ -1,32 +1,24 @@
-// User function Template for Java
-
 class Solution {
-    // Function to find common elements in three arrays.
-    public List<Integer> commonElements(List<Integer> arr1, List<Integer> arr2,
-                                        List<Integer> arr3) {
-        // Code Here
-        List<Integer> res=new ArrayList<>();
-        int i=0,j=0,k=0;
-        while(i<arr1.size() && j<arr2.size() && k<arr3.size()){
-            int a=arr1.get(i);
-            int b=arr2.get(j);
-            int c=arr3.get(k);
-            if(a==b && b==c){
-                res.add(a);
+    public ArrayList<Integer> commonElements(int[] a, int[] b, int[] c) {
+        // code here
+        ArrayList<Integer> ans=new ArrayList<>();
+        int i=0;
+        int j=0;
+        int k=0;
+        while(i<a.length && j<b.length && k<c.length){
+            if(a[i]==b[j] && b[j]==c[k]){
+                if((ans.size()>0 && ans.get(ans.size()-1)!= a[i] ) || ans.size()==0) ans.add(a[i]);
                 i++;
                 j++;
                 k++;
-                int val=a;
-                while(i<arr1.size() && arr1.get(i)==val) i++;
-                while(j<arr2.size() && arr2.get(j)==val) j++;
-                while(k<arr3.size() && arr3.get(k)==val) k++;
-            }else{
-                int min=Math.min(a,Math.min(b,c));
-                if(a==min) i++;
-                if(b==min) j++;
-                if(c==min) k++;
-            }
+            } 
+            if(i>=a.length || j>=b.length || k>=c.length) break;
+            int max=Math.max(a[i],Math.max(b[j],c[k]));
+            
+            while(i<a.length && a[i]<max) i++;
+            while(j<b.length && b[j]<max) j++;
+            while(k<c.length && c[k]<max) k++;
         }
-        return res;
+        return ans;
     }
 }
