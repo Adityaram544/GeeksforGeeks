@@ -5,20 +5,21 @@ class Solution {
         int minP=0;
         Arrays.sort(arr);
         Arrays.sort(dep);
-        for(int i=0;i<n;i++){
-            int l=0,h=n-1;
-            int idx=-1;
-            while(l<=h){
-                int m=l+(h-l)/2;
-                if(dep[m]<arr[i]){
-                    idx=m;
-                    l=m+1;
-                }else{
-                    h=m-1;
-                }
+        int i=0,j=0,cnt=0;
+        while(i<n && j<n){
+            if(arr[i]<=dep[j]){
+                cnt++;
+                minP=Math.max(minP,cnt);
+                i++;
+            }else{
+                cnt--;
+                j++;
             }
-            minP=Math.max(minP,i-idx);
         }
         return minP;
     }
 }
+
+
+
+// 910 1120 1130 1200 1900 2000
