@@ -1,27 +1,35 @@
 class Solution {
     public ArrayList<String> ratInMaze(int[][] maze) {
         // code here
+        int n=maze.length;
         ArrayList<String> res=new ArrayList<>();
         if(maze[0][0]==0) return res;
-        int dir[][]=new int[][]{{1,0},{0,1},{-1,0},{0,-1}};
-        char way[]=new char[]{'D','R','U','L'};
-        paths(maze,0,0,res,"",dir,way);
-        Collections.sort(res);
+        int vis[][]=new int[n][n];
+        solve(res,"",maze,0,0,n,vis);
         return res;
     }
-    private void paths(int maze[][], int i, int j, ArrayList<String> res,
-        String s,int dir[][],char way[]){
-        if(i<0 || j<0 || i>=maze.length || j>=maze.length || maze[i][j]!=1){
-            return;
-        } 
-        if(i==maze.length-1 && j==maze.length-1 && maze[i][j]==1){
+    private boolean isSafe(int i,int j,int n,int vis[][],int maze[][]){
+        return (i>=0 && i<n && j>=0 && j<n && maze[i][j]==1 && vis[i][j]==0);
+    }
+    private void solve(ArrayList<String> res,String s,int maze[][],
+            int i,int j,int n,int vis[][]){
+        if(i==n-1 && j==n-1){
             res.add(s);
             return;
         }
-        maze[i][j]=0;
-        for(int k=0;k<4;k++){
-            paths(maze,i+dir[k][0],j+dir[k][1],res,s+way[k],dir,way);
+        vis[i][j]=1;
+        if(isSafe(i+1,j,n,vis,maze)){
+            solve(res,s+"D",maze,i+1,j,n,vis);
         }
-        maze[i][j]=1;
-    } 
+        if(isSafe(i,j-1,n,vis,maze)){
+            solve(res,s+"L",maze,i,j-1,n,vis);
+        }
+        if(isSafe(i,j+1,n,vis,maze)){
+            solve(res,s+"R",maze,i,j+1,n,vis);
+        }
+        if(isSafe(i-1,j,n,vis,maze)){
+            solve(res,s+"U",maze,i-1,j,n,vis);
+        }
+        vis[i][j]=0;
+    }
 }
